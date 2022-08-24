@@ -1,0 +1,117 @@
+title defence - general
+evolution genesis / concept -> custom / emerging -> product/ converging -> commodity / accepted
+style wardley
+
+//actors
+component government [0.96, 0.65] label [-29, -9]
+component society [0.94, 0.67] label [11, 2]
+component citizen [0.90, 0.71] label [8, 3]
+
+// basics
+component legitimacy [0.92, 0.58] label [-84, -2]
+component trust [0.74, 0.55] label [-42, -3]
+component belonging [0.83, 0.64] label [18, 4]
+pipeline trust [0.41, 0.58]
+component norms [0.90, 0.63] label [12, 9]
+pipeline norms
+component success [0.65, 0.73] label [7, 3]
+component appearance of success [0.74, 0.73] label [8, -22]
+component benevolence [0.72, 0.42] label [-97, 4]
+component integrity [0.72, 0.57] label [14, 4]
+component competence [0.72, 0.50] label [-42, 20]
+component sovereignty [0.58, 0.69] label [0, -12]
+
+
+//1st Order
+pipeline sovereignty [0.45, 0.76]
+component theatre [0.41, 0.63] label [-43, -10]
+pipeline theatre [0.33, 0.74]
+component landscape [0.09, 0.56] label [-73, -9]
+pipeline landscape [0.37, 0.71]
+
+//4th order
+component physical [0.56, 0.75] label [17, 7]
+component cultural  [0.56, 0.67] label [-24, 22]
+component digital [0.56, 0.46] label [-71, 3]
+component political [0.56, 0.62] label [-45, 24]
+component economic [0.56, 0.53] label [-21, 22]
+
+//5th order
+component air [0.39, 0.69] label [-15, -20]
+component land [0.39, 0.73] label [15, 5]
+component sea [0.39, 0.71] label [-10, 19]
+component cyber [0.39, 0.53] label [-20, 21]
+component economy [0.39, 0.34] label [-43, 21]
+component art [0.39, 0.57] label [-11, 20]
+component space [0.39, 0.48] label [-7, 21]
+component critical national infrastructure [0.39, 0.66] label [-45, 12]
+pipeline critical national infrastructure
+
+//6th order
+component CNI [0.24, 0.65] label [-29, -6]
+pipeline CNI [0.59, 0.73]
+component food [0.22, 0.72] label [20, 7]
+component energy [0.22, 0.66] label [-18, 21]
+component telecoms [0.22, 0.60] label [-78, 4]
+
+
+//7th
+component territory [0.07, 0.70] label [18, 2]
+
+//8th
+component supply chain [0.07, 0.38] label [-110, 6]
+
+
+
+//links
+government->society
+society->citizen
+government->legitimacy
+society->success
+citizen->belonging
+// belonging->trust
+legitimacy->trust
+competence->success
+belonging->benevolence
+society->norms
+norms->integrity
+legitimacy->sovereignty
+success->physical
+success->economic
+digital ->success
+integrity->political
+integrity->cultural
+cultural->benevolence
+physical->land
+physical->sea
+//sovereignty->theatre
+physical->air
+physical->space
+cultural->art
+digital->cyber
+economic->economy
+political->cyber
+belonging->appearance of success
+appearance of success->political
+appearance of success->critical national infrastructure
+critical national infrastructure->CNI
+land->territory
+air->territory
+cyber->telecoms
+space->telecoms
+economy->telecoms
+telecoms->supply chain
+energy->supply chain
+water->supply chain
+food->supply chain
+economy->supply chain
+supply chain->economic awareness
+territory->physical awareness
+supply chain->digital awareness
+theatre->capability
+theatre->operating model
+capability->capability
+capability->supply chain
+landscape->situational awareness
+economy->finance
+cyber->supply chain

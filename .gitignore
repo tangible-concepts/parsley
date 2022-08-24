@@ -1,3 +1,5 @@
 /.gradle/
 /.idea/
 /build/
+/neo4j/
+**/.DS_Store

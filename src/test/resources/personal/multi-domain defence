@@ -1,0 +1,125 @@
+// General
+// Map is licensed under creative commons share alike.
+// https://creativecommons.org/licenses/by-sa/4.0/
+// As this is a dynamic document, contributors to the map can be found on the github repository - https://github.com/swardley/Research2022
+
+title defence - multi domain
+evolution genesis / concept -> custom / emerging -> product/ converging -> commodity / accepted
+style wardley
+
+//actors
+component government [0.96, 0.65] label [-29, -9]
+component society [0.93, 0.68] label [7, -5]
+component citizen [0.90, 0.71] label [8, 3]
+
+// basics
+component legitimacy [0.92, 0.58] label [-84, -2]
+
+component sovereignty [0.71, 0.69] label [-3, -11]
+pipeline sovereignty [0.45, 0.76]
+
+component theatre [0.58, 0.62] label [-43, -10]
+pipeline theatre [0.39, 0.74]
+
+component landscape [0.25, 0.55] label [-73, -9]
+pipeline landscape [0.37, 0.64]
+
+component situational awareness [0.10, 0.60] label [-74, -25]
+pipeline situational awareness [0.3, 0.7]
+
+// 2nd order
+component success [0.83, 0.70] label [8, 1]
+component appearance of success [0.84, 0.64] label [-64, -21]
+
+//4th order
+component physical [0.69, 0.75] label [17, 7]
+component cultural  [0.69, 0.67] label [-21, 24]
+component political [0.69, 0.61] label [-45, 26]
+component digital [0.69, 0.46] label [-71, 3]
+component economic [0.69, 0.53] label [-30, 25]
+
+//5th order
+component critical national infrastructure [0.56, 0.66] label [-68, 15]
+pipeline critical national infrastructure
+component land [0.56, 0.73] label [12, -14]
+component sanctions [0.56, 0.40] label [-87, 8]
+
+//6th order
+component CNI [0.42, 0.65] label [-29, -6]
+pipeline CNI [0.59, 0.77]
+component food [0.40, 0.76] label [13, 5]
+component energy [0.40, 0.71] label [-40, -17]
+component water [0.40, 0.73] label [-9, -17]
+component telecoms [0.40, 0.60] label [-75, 5]
+component finance [0.40, 0.63] label [-11, 23]
+
+//7th
+component territory [0.23, 0.38] label [-89, 1]
+component physical awareness [0.08, 0.69] label [15, -5]
+
+//8th
+component supply chain [0.23, 0.63] label [19, 7]
+component economic awareness [0.08, 0.31] label [-84, -10]
+component digital awareness [0.08, 0.39] label [-45, 15]
+
+//9th 
+// evolve sanctions 0.55 label [-51, 23]
+
+//links
+government->society
+society->citizen
+government->legitimacy
+society->success
+citizen->belonging
+belonging->trust
+legitimacy->trust
+competence->success
+belonging->benevolence
+society->norms
+norms->integrity
+legitimacy->sovereignty
+success->physical
+success->economic
+digital ->success
+integrity->political
+integrity->cultural
+cultural->benevolence
+physical->land
+physical->sea
+sovereignty->theatre
+physical->air
+physical->space
+cultural->art
+digital->cyber
+economic->economy
+political->cyber
+belonging->appearance of success
+appearance of success->political
+appearance of success->critical national infrastructure
+critical national infrastructure->CNI
+land->territory
+air->territory
+cyber->telecoms
+space->telecoms
+economy->telecoms
+telecoms->supply chain
+energy->supply chain
+water->supply chain
+food->supply chain
+economy->supply chain
+supply chain->economic awareness
+territory->physical awareness
+theatre->situational awareness
+supply chain->digital awareness
+theatre->capability
+theatre->operating model
+capability->capability
+capability->supply chain
+landscape->situational awareness
+theatre->landscape
+economy->finance
+citizen->appearance of success
+economic->sanctions
+sanctions->supply chain
+sanctions->finance
+appearance of success->cultural

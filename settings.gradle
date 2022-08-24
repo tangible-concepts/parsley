@@ -1,2 +1,13 @@
-rootProject.name = 'parsley-core'
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        mavenLocal()
+    }
+    plugins {
+        id "${quarkusPluginId}" version "${quarkusPluginVersion}"
+    }
+}
 
+rootProject.name='parsley'
+//include ('parsley-core','parsley-neo4j')
