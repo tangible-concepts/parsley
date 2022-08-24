@@ -25,5 +25,5 @@ services:
     depends_on:
       - neo4j
     volumes:
-    - ./src/test/resources/education:/maps
+    - ./maps:/maps
 

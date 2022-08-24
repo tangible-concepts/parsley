@@ -10,11 +10,6 @@ repositories {
 }
 
 dependencies {
-//    implementation ("org.neo4j:neo4j:${neo4jVersion}") {
-//        exclude group: 'org.slf4j'
-//    }
-//    implementation "org.neo4j:neo4j-bolt:${neo4jVersion}"
-//    implementation 'io.quarkiverse.neo4j:quarkus-neo4j:1.4.0'
     implementation 'org.neo4j.driver:neo4j-java-driver:4.4.9'
     implementation("org.jmolecules:jmolecules-ddd:1.4.0")
 
@@ -28,7 +23,7 @@ dependencies {
 }
 
 group 'de.tngbl.parsley'
-version '1.0.0-SNAPSHOT'
+version '0.1.0-SNAPSHOT'
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11

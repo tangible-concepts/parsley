@@ -10,4 +10,3 @@ pluginManagement {
 }
 
 rootProject.name='parsley'
-//include ('parsley-core','parsley-neo4j')
