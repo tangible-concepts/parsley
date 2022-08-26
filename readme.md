@@ -1,6 +1,6 @@
 # Parsley - a free parser for Wardley Maps
 
-Parsley takes one or more Wardley maps described in the grammar of [Online Wardley Maps] (https://www.onlinewardleymaps.com/),
+Parsley takes one or more Wardley maps described in the grammar of [Online Wardley Maps](https://www.onlinewardleymaps.com/),
 converts the map into a graph and stores it in the Neo4J graph database. The main purpose for this is to apply structured queries
 on the map, e.g. to find components that occur in several maps.
 
