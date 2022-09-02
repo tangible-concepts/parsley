@@ -66,7 +66,7 @@ public class Neo4JVerifier {
 
         evolvedComponents.stream().forEach(e -> {
             verifyComponentProperties(NodeLabels.COMPONENT, e);
-            verifyRelationship(e.getMovement());
+            e.getMovements().forEach( m -> verifyRelationship(m));
         });
 
     }

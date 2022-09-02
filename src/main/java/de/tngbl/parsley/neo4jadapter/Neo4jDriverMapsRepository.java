@@ -79,12 +79,14 @@ public class Neo4jDriverMapsRepository implements Maps {
 
         evolvedComponents.forEach(evolved -> {
 
-            Map<String, Object> movementProperties = new HashMap<>();
-            movementProperties.put("evolvedUid", evolved.getId().value());
-            movementProperties.put("componentUid", evolved.getMovement().getFrom().getId().value());
+            evolved.getMovements().forEach(movement -> {
+                Map<String, Object> movementProperties = new HashMap<>();
+                movementProperties.put("evolvedUid", evolved.getId().value());
+                movementProperties.put("componentUid", movement.getFrom().getId().value());
 
-            Query createMovementQuery = new Query("MATCH (e:COMPONENT:EVOLVED_COMPONENT), (c:COMPONENT) WHERE e.uid = $evolvedUid AND c.uid = $componentUid CREATE (c) -[r:EVOLVES_TO]->(e) RETURN r", movementProperties);
-            tx.run(createMovementQuery);
+                Query createMovementQuery = new Query("MATCH (e:COMPONENT:EVOLVED_COMPONENT), (c:COMPONENT) WHERE e.uid = $evolvedUid AND c.uid = $componentUid CREATE (c) -[r:EVOLVES_TO]->(e) RETURN r", movementProperties);
+                tx.run(createMovementQuery);
+            });
         });
 
     }

@@ -7,8 +7,8 @@ public class Link extends MapElement {
 
     public static final String CONCATENATOR = "->";
 
-    private final Component from;
-    private final Component to;
+    protected final Component from;
+    protected final Component to;
 
     public Link(Component from, Component to) {
         super();

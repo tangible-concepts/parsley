@@ -1,7 +1,7 @@
 package de.tngbl.parsley.wardleymapping;
 
 /**
- * Base Class for every element that is part of a map
+ * Base Class for every element that is part of a map.
  */
 public abstract class MapElement implements Identifiable{
 

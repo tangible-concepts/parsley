@@ -44,13 +44,13 @@ public class WardleyMap implements Named, Identifiable{
 
     }
 
-    public Component addComponent(String name, float visibility, float evolution, boolean hasInertia) {
+    public Component addComponent(String name, float visibility, float evolution) {
 
         Name componentName = Name.of(name);
         VisibilityLevel componentVisibility = new VisibilityLevel(visibility);
         EvolutionLevel componentEvolution = EvolutionLevel.of(evolution);
 
-        Component component = new Component(componentName, componentVisibility, componentEvolution, hasInertia);
+        Component component = new Component(componentName, componentVisibility, componentEvolution);
         mapElements.put(componentName, component);
         return component;
     }
@@ -69,14 +69,18 @@ public class WardleyMap implements Named, Identifiable{
 
     }
 
+    // TODO: Delegate responsibility to Component
     public void evolveComponent(String componentName, float evolutionLevel) {
 
         Component origin = getComponent(componentName).orElseThrow(() -> new MapSemanticsViolated(String.format("Cannot evolve undeclared Component%s", componentName)));
         EvolutionLevel evoLevel = EvolutionLevel.of(evolutionLevel);
+        EvolvedComponent evolvedComponent = new EvolvedComponent(origin, evoLevel);
 
-        EvolvedComponent evolution = new EvolvedComponent(origin, evoLevel);
+        Movement movement = new Movement(origin, evolvedComponent);
+        origin.addMovement(movement);
+        evolvedComponent.addMovement(movement);
 
-        mapElements.put(evolution.deriveName(), evolution);
+        mapElements.put(evolvedComponent.deriveName(), evolvedComponent);
 
     }
 

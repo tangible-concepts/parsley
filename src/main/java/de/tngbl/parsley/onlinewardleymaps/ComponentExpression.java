@@ -1,11 +1,17 @@
 package de.tngbl.parsley.onlinewardleymaps;
 
+import de.tngbl.parsley.wardleymapping.Component;
 import de.tngbl.parsley.wardleymapping.MapSemanticsViolated;
 import io.quarkus.logging.Log;
 
 import java.util.List;
 
 /**
+ *
+ * In the OWM grammar inertia is tied to a component, while parsleys domain model defines inertia as a charakteristic of Movement.
+ * This mismatch needs to be addressed when resolving the component expression.
+ *
+ * Examples:
  * component Cup of Tea [0.79, 0.61] label [19, -4]
  * component Water [0.73, 0.78]
  */
@@ -14,14 +20,14 @@ public class ComponentExpression extends Expression {
     private final String name;
     private final float evolution;
     private final float visibility;
-    private final boolean inertia;
+    private final boolean hasInertia;
 
     public ComponentExpression(List<Token> tokens) {
         super(tokens);
         this.name = ((Identifier) tokens.get(1)).getName();
         this.evolution = ((PositionLiteral) tokens.get(2)).getX();
         this.visibility = ((PositionLiteral) tokens.get(2)).getY();
-        this.inertia = tokens.contains(Commands.INERTIA);
+        this.hasInertia = tokens.contains(Commands.INERTIA);
     }
 
     @Override
@@ -39,7 +45,12 @@ public class ComponentExpression extends Expression {
 
         try {
             context.addIdentifier(name);
-            context.getMap().addComponent(name, normalizedVisibility, normalizedEvolution, inertia);
+            Component createdComponent = context.getMap().addComponent(name, normalizedVisibility, normalizedEvolution);
+
+            if (hasInertia) {
+                context.addHint(new InertiaHint(createdComponent));
+            }
+
         } catch (ParserException e) {
             Log.error("Component with identifier '" + name + "'already existis! Skipping component creation.");
         } catch (MapSemanticsViolated v) {
