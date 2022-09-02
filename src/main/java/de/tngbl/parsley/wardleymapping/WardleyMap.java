@@ -14,7 +14,7 @@ import java.util.Optional;
  * - Method to retrieve Set of components by type, e.g. getAnchors()
  */
 @AggregateRoot
-public class WardleyMap implements Named, Identifiable{
+public class WardleyMap implements Named, Identifiable {
 
     private final static Logger LOG = LoggerFactory.getLogger(WardleyMap.class);
     public static final String UNTITLED_MAP = "Untitled Map";
@@ -26,7 +26,7 @@ public class WardleyMap implements Named, Identifiable{
     public void setMapTitle(String title) {
 
         if (null != this.mapTitle) {
-            LOG.info(String.format("Map title already set! Replacing '%s' with '%s'", mapTitle.value(),title));
+            LOG.info(String.format("Map title already set! Replacing '%s' with '%s'", mapTitle.value(), title));
         }
 
         this.mapTitle = Name.of(title);
@@ -60,8 +60,8 @@ public class WardleyMap implements Named, Identifiable{
         Name from = Name.of(f);
         Name to = Name.of(t);
 
-        Component linkFrom = getComponent(from).orElseThrow((() -> new MapSemanticsViolated(String.format("Cannot create link for undeclared Component '%s'",f))));
-        Component linkTo = getComponent(to).orElseThrow((() -> new MapSemanticsViolated(String.format("Cannot create link for undeclared Component '%s'", t))));
+        ComponentBase linkFrom = getComponent(from).orElseThrow((() -> new MapSemanticsViolated(String.format("Cannot create link for undeclared Component '%s'", f))));
+        ComponentBase linkTo = getComponent(to).orElseThrow((() -> new MapSemanticsViolated(String.format("Cannot create link for undeclared Component '%s'", t))));
 
         Link link = new Link(linkFrom, linkTo);
 
@@ -72,7 +72,12 @@ public class WardleyMap implements Named, Identifiable{
     // TODO: Delegate responsibility to Component
     public void evolveComponent(String componentName, float evolutionLevel) {
 
-        Component origin = getComponent(componentName).orElseThrow(() -> new MapSemanticsViolated(String.format("Cannot evolve undeclared Component%s", componentName)));
+        ComponentBase componentBase = getComponent(componentName).orElseThrow(() -> new MapSemanticsViolated(String.format("Cannot evolve undeclared Component%s", componentName)));
+        if (! (componentBase instanceof Component)) {
+            throw new MapSemanticsViolated(String.format("Cannot evolve Component: %s", componentBase));
+        }
+
+        Component origin = (Component) componentBase;
         EvolutionLevel evoLevel = EvolutionLevel.of(evolutionLevel);
         EvolvedComponent evolvedComponent = new EvolvedComponent(origin, evoLevel);
 
@@ -84,17 +89,17 @@ public class WardleyMap implements Named, Identifiable{
 
     }
 
-    public Optional<Component> getComponent(String name) {
+    public Optional<ComponentBase> getComponent(String name) {
         return getComponent(Name.of(name));
     }
 
 
-        public Optional<Component> getComponent(Name name) {
+    public Optional<ComponentBase> getComponent(Name name) {
 
         MapElement element = mapElements.get(name);
 
-        if (element instanceof Component) {
-            return Optional.of((Component) element);
+        if (element instanceof ComponentBase) {
+            return Optional.of((ComponentBase) element);
         } else {
             return Optional.empty();
         }

@@ -12,15 +12,15 @@ public class EvolvedComponent extends Component {
     }
 
     public Name deriveName() {
-        return Name.of(String.format("%s %s [%s]", super.getName().value(),CONCATENATOR, evolution.value()));
+        return Name.of(String.format("%s %s [%s]", super.getName().value(),CONCATENATOR, getEvolution().value()));
     }
 
     @Override
     public String toString() {
         return "EvolvedComponent{" +
-                "name=" + name +
-                ", visibility=" + visibility +
-                ", evolution=" + evolution +
+                "name=" + getName() +
+                ", visibility=" + getVisibility() +
+                ", evolution=" + getEvolution() +
                 ", movements=" + movements +
                 '}';
     }

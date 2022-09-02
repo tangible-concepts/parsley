@@ -4,7 +4,7 @@ package de.tngbl.parsley.wardleymapping;
 import org.jmolecules.ddd.annotation.Entity;
 
 @Entity
-public class Anchor extends Component {
+public class Anchor extends ComponentBase {
 
     public Anchor(Name anchorName, VisibilityLevel anchorVisibilityLevel, EvolutionLevel anchorEvolutionLevel) {
         super(anchorName, anchorVisibilityLevel, anchorEvolutionLevel);
@@ -13,9 +13,9 @@ public class Anchor extends Component {
     @Override
     public String toString() {
         return "Anchor{" +
-                "name=" + name +
-                ", visibility=" + visibility +
-                ", evolution=" + evolution +
+                "name=" + getName() +
+                ", visibility=" + getVisibility() +
+                ", evolution=" + getEvolution() +
                 '}';
     }
 }

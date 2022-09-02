@@ -91,7 +91,7 @@ public class Neo4jDriverMapsRepository implements Maps {
 
     }
 
-    private void persistAndLinkComponentsWithMap(Transaction tx, List<? extends Component> components, Id mapId, Query query) {
+    private void persistAndLinkComponentsWithMap(Transaction tx, List<? extends ComponentBase> components, Id mapId, Query query) {
 
         components.forEach(component -> {
             Map<String, Object> properties = getComponentProperties(component);
@@ -151,7 +151,7 @@ public class Neo4jDriverMapsRepository implements Maps {
         return properties;
     }
 
-    public Map<String, Object> getComponentProperties(Component element) {
+    public Map<String, Object> getComponentProperties(ComponentBase element) {
 
         Map<String, Object> properties = getBaseProperties(element);
         properties.put(VISIBILITY_PROPERTY, Float.toString(element.getVisibility().value()));

@@ -36,7 +36,7 @@ public class AcceptanceTestScenarioBuilder {
 
     public AcceptanceTestScenarioBuilder withRelationship(String from, String to) {
 
-        Optional<? extends Component> fromComponent = components.stream().filter(c -> c.getName().value().equals(from)).findFirst();
+        Optional<? extends ComponentBase> fromComponent = components.stream().filter(c -> c.getName().value().equals(from)).findFirst();
 
         if (fromComponent.isEmpty()) {
             fromComponent = anchors.stream().filter(a -> a.getName().value().equals(from)).findFirst();

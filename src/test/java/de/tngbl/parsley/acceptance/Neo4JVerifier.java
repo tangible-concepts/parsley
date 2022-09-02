@@ -104,7 +104,7 @@ public class Neo4JVerifier {
 
     }
 
-    public void verifyComponentProperties(NodeLabels type, Component component) {
+    public void verifyComponentProperties(NodeLabels type, ComponentBase component) {
 
         String label = type.label();
         String rawQuery = "MATCH (a:$label) WHERE a.name = $name AND a.visibility = $visibility AND a.evolution = $evolution RETURN a".replace("$label", label);
@@ -115,7 +115,7 @@ public class Neo4JVerifier {
     }
 
 
-    private Map<String, Object> getComponentProperties(Component component) {
+    private Map<String, Object> getComponentProperties(ComponentBase component) {
         Map<String, Object> properties = new HashMap<>();
         properties.put(NAME_PROPERTY, component.getName().value());
         properties.put(VISIBILITY_PROPERTY, Float.toString(component.getVisibility().value()));

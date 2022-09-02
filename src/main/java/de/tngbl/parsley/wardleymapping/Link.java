@@ -7,10 +7,10 @@ public class Link extends MapElement {
 
     public static final String CONCATENATOR = "->";
 
-    protected final Component from;
-    protected final Component to;
+    protected final ComponentBase from;
+    protected final ComponentBase to;
 
-    public Link(Component from, Component to) {
+    public Link(ComponentBase from, ComponentBase to) {
         super();
         this.from = from;
         this.to = to;
@@ -20,11 +20,11 @@ public class Link extends MapElement {
         return Name.of(from + CONCATENATOR + to);
     }
 
-    public Component getFrom() {
+    public ComponentBase getFrom() {
         return from;
     }
 
-    public Component getTo() {
+    public ComponentBase getTo() {
         return to;
     }
 
