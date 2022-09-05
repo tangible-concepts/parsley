@@ -31,7 +31,7 @@ public class PipelineExpression extends ComponentExpression {
     @Override
     public InterpreterContext evaluate(InterpreterContext context) {
 
-        Log.error(String.format("PipelineExpressions are not supported yet! Expressing pipeline '%s' as component!", name));
+        Log.warn(String.format("PipelineExpressions are not supported yet! Expressing pipeline '%s' as component!", name));
         return super.evaluate(context);
     }
 }

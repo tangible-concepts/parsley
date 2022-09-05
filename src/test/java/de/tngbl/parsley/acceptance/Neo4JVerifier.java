@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static de.tngbl.parsley.acceptance.AcceptanceTestScenario.*;
 import static de.tngbl.parsley.neo4jadapter.Neo4jDriverMapsRepository.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.neo4j.driver.SessionConfig.builder;
@@ -36,37 +37,37 @@ public class Neo4JVerifier {
 
         String mapUid = getUidFrom(wardleyMapNode);
 
-            map.getMapElements().entrySet().stream().forEach(e -> {
+        map.getMapElements().entrySet().stream().forEach(e -> {
 
-                Map<String, Object> properties = new HashMap<>();
-                properties.put("mapUid", mapUid);
-                properties.put("componentName", e.getValue().getId().value());
+            Map<String, Object> properties = new HashMap<>();
+            properties.put("mapUid", mapUid);
+            properties.put("componentName", e.getValue().getId().value());
 
-                Query query = new Query("MATCH (m:MAP) -[r:CONTAINS]-> (c) WHERE m.uid = $mapUid AND c.name = $componentName RETURN r", properties);
-                runQueryAndExpectResults(query, 1);
+            Query query = new Query("MATCH (m:MAP) -[r:CONTAINS]-> (c) WHERE m.uid = $mapUid AND c.name = $componentName RETURN r", properties);
+            runQueryAndExpectResults(query, 1);
 
-            });
+        });
     }
 
     public void verifyAnchors(List<Anchor> anchors) {
 
-            anchors.stream().forEach(a -> {
-                verifyComponentProperties(NodeLabels.ANCHOR, a);
-            });
+        anchors.stream().forEach(a -> {
+            verifyComponentProperties(NodeLabels.ANCHOR, a);
+        });
     }
 
     public void verifyComponents(List<Component> components) {
 
-            components.stream().forEach(c -> {
-                verifyComponentProperties(NodeLabels.COMPONENT, c);
-            });
+        components.stream().forEach(c -> {
+            verifyComponentProperties(NodeLabels.COMPONENT, c);
+        });
     }
 
     public void verifyMovement(List<EvolvedComponent> evolvedComponents) {
 
         evolvedComponents.stream().forEach(e -> {
             verifyComponentProperties(NodeLabels.COMPONENT, e);
-            e.getMovements().forEach( m -> verifyRelationship(m));
+            e.getMovements().forEach(m -> verifyRelationship(m));
         });
 
     }
@@ -84,7 +85,7 @@ public class Neo4JVerifier {
 
             String relationType;
             if (r instanceof Movement) {
-               relationType = RelationshipTypes.EVOLVES_TO.type();
+                relationType = RelationshipTypes.EVOLVES_TO.type();
             } else {
                 relationType = RelationshipTypes.NEEDS.type();
             }
@@ -94,12 +95,12 @@ public class Neo4JVerifier {
             parameters.put("toName", r.getTo().getName().value());
 
             // Parameter replacement in Neo4j Driver not supported for IN Clauses, thus replacement beforehand
-            String queryText = "MATCH (f:COMPONENT)-[r]->(t:COMPONENT) WHERE f.name = $fromName AND t.name = $toName AND type(r) IN ['$type'] RETURN r".replace("$type", relationType);
+            String queryText = "MATCH (f:COMPONENT)-[r]->(t:COMPONENT) WHERE f.name = $fromName AND t.name = $toName AND type(r) IN ['$type'] RETURN r" .replace("$type", relationType);
             Query query = new Query(queryText, parameters);
 
             List<Relationship> matches = tx.run(query).stream().map(l -> l.get(0).asRelationship()).collect(Collectors.toList());
 
-            assertTrue(matches.size() >= 1, String.format("Expected to find at least one realtionship: %s, Query: %s", r.toString(), query.toString()) );
+            assertTrue(matches.size() >= 1, String.format("Expected to find at least one realtionship: %s, Query: %s", r.toString(), query.toString()));
         }
 
     }
@@ -107,7 +108,7 @@ public class Neo4JVerifier {
     public void verifyComponentProperties(NodeLabels type, ComponentBase component) {
 
         String label = type.label();
-        String rawQuery = "MATCH (a:$label) WHERE a.name = $name AND a.visibility = $visibility AND a.evolution = $evolution RETURN a".replace("$label", label);
+        String rawQuery = "MATCH (a:$label) WHERE a.name = $name AND a.visibility = $visibility AND a.evolution = $evolution RETURN a" .replace("$label", label);
 
         Query query = new Query(rawQuery, getComponentProperties(component));
         runQueryAndExpectResults(query, 1);
@@ -145,4 +146,26 @@ public class Neo4JVerifier {
         return node.get(Neo4jDriverMapsRepository.UID_PROPERTY).asString();
     }
 
+    public void verifyInertias(List<InertiaTemplate> inertias) {
+        inertias.forEach(i -> verifyInertia(i));
+    }
+
+    private void verifyInertia(InertiaTemplate i) {
+        try (Transaction tx = driver.session(builder().withDefaultAccessMode(AccessMode.READ).build()).beginTransaction()) {
+
+            Map<String, Object> parameter = new HashMap<>();
+            parameter.put("componentName", i.getComponent().getName().value());
+            Query query = new Query("MATCH (c:COMPONENT)-[m:EVOLVES_TO]->(:EVOLVED_COMPONENT) WHERE c.name = $componentName AND EXISTS(m.hasInertia) RETURN m", parameter);
+            assertTrue(tx.run(query).list().size() >= 1, String.format("Expected at least one Inertia for Component: %s", i.getComponent().getName().value()));
+
+        }
+    }
+
+    public void verifyPipelines(List<PipelineTemplate> pipelines) {
+        // not yet supported
+    }
+
+    public void verifyFlows(List<FlowTemplate> flows) {
+        //  not yet supported
+    }
 }

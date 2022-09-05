@@ -2,4 +2,5 @@
 /.idea/
 /build/
 /neo4j/
+/maps/
 **/.DS_Store

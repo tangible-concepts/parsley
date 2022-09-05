@@ -4,7 +4,8 @@ public enum RelationshipTypes {
 
     NEEDS("NEEDS"),
     EVOLVES_TO("EVOLVES_TO"),
-    CONTAINS("CONTAINS");
+    CONTAINS("CONTAINS"),
+    INERTIA("INERTIA");
 
     private final String type;
 

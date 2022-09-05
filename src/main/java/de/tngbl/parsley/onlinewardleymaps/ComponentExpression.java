@@ -27,7 +27,7 @@ public class ComponentExpression extends Expression {
         this.name = ((Identifier) tokens.get(1)).getName();
         this.evolution = ((PositionLiteral) tokens.get(2)).getX();
         this.visibility = ((PositionLiteral) tokens.get(2)).getY();
-        this.hasInertia = tokens.contains(Commands.INERTIA);
+        this.hasInertia = tokens.contains(new StringLiteral("inertia"));
     }
 
     @Override

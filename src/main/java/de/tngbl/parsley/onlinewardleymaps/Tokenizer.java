@@ -35,7 +35,6 @@ public class Tokenizer {
 
             List<Token> tokens = tokenizeExpression(expression);
 
-
             if (!tokens.isEmpty()) {
                 tokenizedExpressions.add(tokens);
             }
@@ -164,7 +163,11 @@ public class Tokenizer {
         tokens.add(flowOperator);
 
         if (flowOperator.getRightOperand().isPresent()) {
-            tokens.add(new Identifier(new StringLiteral(flowOperator.getRightOperand().get())));
+            if (flowOperator.getRightOperand().get().isEmpty()) {
+                tokens.add(new Identifier(new StringLiteral(rawTokens.remove(0))));
+            } else {
+                tokens.add(new Identifier(new StringLiteral(flowOperator.getRightOperand().get())));
+            }
         } // else right operand is a seperate raw token
 
     }

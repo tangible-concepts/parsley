@@ -13,8 +13,8 @@ import java.util.List;
  */
 public class LinkExpression extends Expression {
 
-    private final Identifier from;
-    private final Identifier to;
+    protected final Identifier from;
+    protected final Identifier to;
 
     public LinkExpression(List<Token> tokens) {
         super(tokens);

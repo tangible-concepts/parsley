@@ -84,7 +84,11 @@ public class Neo4jDriverMapsRepository implements Maps {
                 movementProperties.put("evolvedUid", evolved.getId().value());
                 movementProperties.put("componentUid", movement.getFrom().getId().value());
 
-                Query createMovementQuery = new Query("MATCH (e:COMPONENT:EVOLVED_COMPONENT), (c:COMPONENT) WHERE e.uid = $evolvedUid AND c.uid = $componentUid CREATE (c) -[r:EVOLVES_TO]->(e) RETURN r", movementProperties);
+                String inertiaSubstring = movement.getInertias().isEmpty() ? "" : "{hasInertia:true}";
+                String rawQuery = "MATCH (e:COMPONENT:EVOLVED_COMPONENT), (c:COMPONENT) WHERE e.uid = $evolvedUid AND c.uid = $componentUid CREATE (c) -[r:EVOLVES_TO$inertia]->(e) RETURN r";
+                rawQuery = rawQuery.replace("$inertia", inertiaSubstring);    // Neo4J Driver does not allow for Labels to be replaced by parameters, thus preprocessing the query
+
+                Query createMovementQuery = new Query(rawQuery, movementProperties);
                 tx.run(createMovementQuery);
             });
         });

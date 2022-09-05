@@ -1,5 +1,7 @@
 package de.tngbl.parsley.onlinewardleymaps;
 
+import java.util.Objects;
+
 public class StringLiteral implements Token {
 
     public final static String DELIMITER_LABEL = "label";
@@ -43,5 +45,18 @@ public class StringLiteral implements Token {
         return s.equals(DELIMITER_LABEL) ||
                 s.startsWith(DELIMITER_OPENING_BRACKET) ||
                 s.endsWith(DELIMITER_CLOSING_BRACKET);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StringLiteral literal1 = (StringLiteral) o;
+        return literal.equals(literal1.literal);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(literal);
     }
 }
