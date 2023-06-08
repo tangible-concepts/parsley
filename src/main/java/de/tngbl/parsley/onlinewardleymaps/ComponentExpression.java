@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * In the OWM grammar inertia is tied to a component, while parsleys domain model defines inertia as a charakteristic of Movement.
+ * In the OWM grammar inertia is tied to a component, while parsleys domain model defines inertia as a characteristic of Movement.
  * This mismatch needs to be addressed when resolving the component expression.
  *
  * Examples:
