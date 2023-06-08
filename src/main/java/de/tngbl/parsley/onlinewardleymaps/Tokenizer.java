@@ -85,7 +85,7 @@ public class Tokenizer {
     }
 
     /**
-     * Preprocessing ist perfromed to ensure a certain level of well-formdness on the input, allowing later staeps during the parsing and interpretation process to rely on assumptions, eg. operators are always isolated tokens.
+     * Preprocessing is perfromed to ensure a certain level of well-formdness on the input, allowing later steps during the parsing and interpretation process to rely on assumptions, eg. operators are always isolated tokens.
      * @param rawExpression the input as defined in the source
      * @return splitted expression
      */
